@@ -5,6 +5,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.ServletException;
+import javax.servlet.SessionCookieConfig;
 import javax.servlet.annotation.WebListener;
 
 import epsilongtmyon.app.filter.AuthenticationFilter;
@@ -31,6 +32,9 @@ public class AppInitializer implements ServletContextListener {
 			throw new RuntimeException(e);
 		}
 
+		final SessionCookieConfig sessionCookieConfig = servletContext.getSessionCookieConfig();
+		// cookie名でjavaだというのがバレるのが嫌な場合などは名前を変える
+		sessionCookieConfig.setName("my-cookie");
 	}
 
 }
