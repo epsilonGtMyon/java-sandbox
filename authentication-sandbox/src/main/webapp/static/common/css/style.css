@@ -1,0 +1,6 @@
+.message {
+	
+}
+.message.is-danger {
+	color: red;
+}
