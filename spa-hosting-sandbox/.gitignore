@@ -1,0 +1,16 @@
+# Ignore Gradle project-specific cache directory
+.gradle
+
+# Ignore Gradle build output directory
+build
+
+# eclipse
+bin
+.classpath
+.project
+.settings
+
+
+#
+/src/main/webapp/*
+!/src/main/webapp/WEB-INF/
