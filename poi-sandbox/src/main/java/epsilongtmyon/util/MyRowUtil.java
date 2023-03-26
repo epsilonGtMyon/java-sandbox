@@ -3,6 +3,7 @@ package epsilongtmyon.util;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.ss.usermodel.CellCopyPolicy;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 
 /**
@@ -78,5 +79,23 @@ public class MyRowUtil {
 		} else {
 			throw new IllegalArgumentException("unknown destRow class " + destRow.getClass().getName());
 		}
+	}
+	
+	
+
+	/**
+	 * 空行を挿入します。
+	 * 
+	 * @param sheet 対象のシート
+	 * @param targetRownum 対象の行番号
+	 * @param rowCount 行数
+	 */
+	public static void insertRows(Sheet sheet, int targetRownum, int rowCount) {
+		final int lastRowNum = sheet.getLastRowNum();
+		if (targetRownum > lastRowNum) {
+			// 最終行よりも後なので何もする必要ないはず
+			return;
+		}
+		sheet.shiftRows(targetRownum, lastRowNum, rowCount, true, true);
 	}
 }
