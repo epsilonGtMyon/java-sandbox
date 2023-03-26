@@ -12,7 +12,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellUtil;
 
-import epsilongtmyon.util.MyCellUtil;
+import epsilongtmyon.util.MyRowUtil;
 import epsilongtmyon.util.ResourceUtil;
 import epsilongtmyon.util.WorkbookSaver;
 
@@ -37,29 +37,18 @@ public class Sandbox03 {
 
 			int templateRowNum = 2;
 			final Row templateRow = sheet1.getRow(templateRowNum);
-			short templateRowLastCellNum = templateRow.getLastCellNum();
 
-			// レコード数分下にずらす
-			sheet1.shiftRows(templateRowNum + 1, templateRowNum + 1, records.size());
+			// レコード数分行追加(下にずらす)
+			MyRowUtil.insertRows(sheet1, templateRowNum + 1, records.size());
 
 			// ずらしたところにテンプレート行の内容をコピー
 			for (int i = 1, n = records.size(); i <= n; i++) {
 				final Row destRow = CellUtil.getRow(templateRowNum + i, sheet1);
-				for (int j = 0; j < templateRowLastCellNum; j++) {
-
-					final Cell srcCell = templateRow.getCell(j);
-					final Cell destCell = CellUtil.getCell(destRow, j);
-
-					if (srcCell != null) {
-						// セルのスタイルをコピー
-						MyCellUtil.copyCellStyle(srcCell, destCell);
-					}
-				}
+				MyRowUtil.copyRow(templateRow, destRow);
 			}
 
-			// テンプレートの行を削除して上に詰める
-			sheet1.removeRow(templateRow);
-			sheet1.shiftRows(templateRowNum + 1, sheet1.getLastRowNum(), -1);
+			// テンプレートの行を削除して
+			MyRowUtil.removeRow(sheet1, templateRowNum);
 			//------------------------
 
 			for (int i = 0, n = records.size(); i < n; i++) {
@@ -77,7 +66,7 @@ public class Sandbox03 {
 
 				Cell cell4 = CellUtil.getCell(targetRow, 4);
 				cell4.setCellValue(record.total().doubleValue());
-				
+
 			}
 
 			WorkbookSaver.save(workbook);

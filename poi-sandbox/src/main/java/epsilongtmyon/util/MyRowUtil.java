@@ -80,8 +80,6 @@ public class MyRowUtil {
 			throw new IllegalArgumentException("unknown destRow class " + destRow.getClass().getName());
 		}
 	}
-	
-	
 
 	/**
 	 * 空行を挿入します。
@@ -97,5 +95,46 @@ public class MyRowUtil {
 			return;
 		}
 		sheet.shiftRows(targetRownum, lastRowNum, rowCount, true, true);
+	}
+
+	/**
+	 * 行を削除します。
+	 * 
+	 * @param sheet 対象のシート
+	 * @param targetRownum 対象の行番号
+	 */
+	public static void removeRow(Sheet sheet, int targetRownum) {
+		final Row row = sheet.getRow(targetRownum);
+		if (row == null) {
+			return;
+		}
+
+		sheet.removeRow(row);
+
+		// 削除した次の行～最終行 までを一つ上にずらす
+		sheet.shiftRows(targetRownum + 1, sheet.getLastRowNum(), -1);
+	}
+
+	/**
+	 * 行を削除します。
+	 * 
+	 * @param sheet 対象のシート
+	 * @param startRownum 対象の行番号
+	 * @param endRownum 対象の行番号
+	 */
+	public static void removeRows(Sheet sheet, int startRownum, int endRownum) {
+
+		for (int i = endRownum; i > startRownum; i--) {
+			final Row row = sheet.getRow(i);
+			if (row == null) {
+				continue;
+			}
+
+			sheet.removeRow(row);
+		}
+
+		final int removedRowCount = endRownum - startRownum + 1;
+		// 削除した次の行～最終行 までを上にずらす
+		sheet.shiftRows(endRownum + 1, sheet.getLastRowNum(), -removedRowCount);
 	}
 }
