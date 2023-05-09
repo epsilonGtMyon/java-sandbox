@@ -23,4 +23,14 @@ public class Sandbox01Static {
 	protected static String protectedHello(String text) {
 		return String.format("hello %s", text);
 	}
+
+	//---------------------
+
+	public static String publicHey(String text) {
+		return privateHey(text);
+	}
+
+	private static String privateHey(String text) {
+		return String.format("hey %s", text);
+	}
 }

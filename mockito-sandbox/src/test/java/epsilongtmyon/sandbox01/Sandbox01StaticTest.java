@@ -43,4 +43,65 @@ class Sandbox01StaticTest {
 		}
 	}
 
+	@Test
+	@DisplayName("mockStaticしたときにprotectedメソッドのデフォルトの挙動を確認")
+	public void test3() throws Exception {
+		try (MockedStatic<Sandbox01Static> mockStatic = Mockito.mockStatic(Sandbox01Static.class)) {
+
+			mockStatic.when(() -> Sandbox01Static.publicHello(Mockito.anyString())).thenCallRealMethod();
+
+			// nullが返ってくる
+			// protectedのメソッドは何もしていない
+			System.out.println(Sandbox01Static.publicHello("yahoo"));
+		}
+	}
+
+
+	@Test
+	@DisplayName("mockStaticしたときにprivateメソッドのデフォルトの挙動を確認")
+	public void test4() throws Exception {
+		try (MockedStatic<Sandbox01Static> mockStatic = Mockito.mockStatic(Sandbox01Static.class)) {
+
+			mockStatic.when(() -> Sandbox01Static.publicHey(Mockito.anyString())).thenCallRealMethod();
+
+			// nullが返ってくる
+			System.out.println(Sandbox01Static.publicHey("yahoo"));
+		}
+		System.out.println(Sandbox01Static.publicHey("yahoo"));
+	}
+	
+
+
+	@Test
+	@DisplayName("mockStaticしたときのMockito.CALLS_REAL_METHODSの挙動を確認")
+	public void test5() throws Exception {
+		// モック化する前の挙動を本来の実装の動きにできるようだ
+		try (MockedStatic<Sandbox01Static> mockStatic = Mockito.mockStatic(Sandbox01Static.class, Mockito.CALLS_REAL_METHODS)) {
+
+			System.out.println("test5:before mock--");
+			// モック化前
+			System.out.println(Sandbox01Static.repeat2("abc"));
+			System.out.println(Sandbox01Static.repeat3("abc"));
+			System.out.println(Sandbox01Static.repeat4("abc"));
+
+			System.out.println(Sandbox01Static.publicHello("yahoo"));
+			System.out.println(Sandbox01Static.publicHey("yahoo"));
+
+			
+			mockStatic.when(() -> Sandbox01Static.repeat2(Mockito.anyString())).thenReturn("hello");
+			mockStatic.when(() -> Sandbox01Static.protectedHello(Mockito.anyString())).thenAnswer(
+					AdditionalAnswers.answer(s -> String.format("protected %s", s)));
+
+			System.out.println("test5:after mock--");
+			// モック化後
+			System.out.println(Sandbox01Static.repeat2("abc"));
+			System.out.println(Sandbox01Static.repeat3("abc"));
+			System.out.println(Sandbox01Static.repeat4("abc"));
+
+			System.out.println(Sandbox01Static.publicHello("yahoo"));
+			System.out.println(Sandbox01Static.publicHey("yahoo"));
+			System.out.println("test5:end--");
+		}
+	}
+
 }
