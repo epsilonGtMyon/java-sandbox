@@ -1,10 +1,10 @@
 package epsilongtmyon.db.entity;
 
-import java.io.Serializable;
-import java.sql.Timestamp;
-
+import epsilongtmyon.db.entity.common.AbstactEntity;
+import epsilongtmyon.db.entity.common.AbstractEntityListener;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.Id;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
@@ -14,9 +14,10 @@ import jakarta.persistence.Table;
 // 起動時にプリコンパイルされて文法ミスにも気づけるそうだ
 // xmlにも記述可能
 @NamedQueries(@NamedQuery(name = "Emp.findByBloodType", query = "SELECT e FROM Emp e WHERE e.bloodType = :bloodType"))
+@EntityListeners(AbstractEntityListener.class)
 @Entity
 @Table(name = "EMP")
-public class Emp implements Serializable {
+public class Emp extends AbstactEntity {
 
 	@Id
 	@Column(name = "EMP_ID")
@@ -33,9 +34,6 @@ public class Emp implements Serializable {
 
 	@Column(name = "NOTE")
 	private String note;
-
-	@Column(name = "CREATED_AT")
-	private Timestamp createdAt;
 
 	public String getEmpId() {
 		return empId;
@@ -77,18 +75,10 @@ public class Emp implements Serializable {
 		this.note = note;
 	}
 
-	public Timestamp getCreatedAt() {
-		return createdAt;
-	}
-
-	public void setCreatedAt(Timestamp createdAt) {
-		this.createdAt = createdAt;
-	}
-
 	@Override
 	public String toString() {
 		return "Emp [empId=" + empId + ", firstName=" + firstName + ", familyName=" + familyName + ", bloodType="
-				+ bloodType + ", note=" + note + ", createdAt=" + createdAt + "]";
+				+ bloodType + ", note=" + note + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + "]";
 	}
 
 }

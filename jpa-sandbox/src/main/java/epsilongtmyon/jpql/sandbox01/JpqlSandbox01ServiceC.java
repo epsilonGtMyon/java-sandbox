@@ -23,7 +23,7 @@ public class JpqlSandbox01ServiceC {
 		tx.begin();
 
 		try {
-			executeInternal03();
+			executeInternal04();
 			tx.commit();
 		} catch (Exception e) {
 			tx.rollback();
@@ -103,5 +103,18 @@ public class JpqlSandbox01ServiceC {
 		emps2.forEach(e -> {
 			System.out.println(e);
 		});
+	}
+	
+
+	// NamedQuery
+	private void executeInternal04() {
+		
+		Emp maxEmp = em.createNamedQuery("Emp.findByMaxEmpId", Emp.class)
+			.getSingleResult();
+		
+		System.out.println(maxEmp);
+		
+		// JPQLで取得してもremoveで削除できる。
+		em.remove(maxEmp);
 	}
 }

@@ -20,7 +20,7 @@ public class JpqlSandbox01NamedQueryPrepareService {
 	public void preateNamedQuery() {
 		
 		
-		final String jpql = """
+		final String jpql1 = """
 SELECT
   e
 FROM
@@ -31,8 +31,26 @@ ORDER BY
   e.empId
 				""";
 		
-		TypedQuery<Emp> query = em.createQuery(jpql, Emp.class);
-		emf.addNamedQuery("Emp.findByAfterCreatedAt", query);
+		TypedQuery<Emp> query1 = em.createQuery(jpql1, Emp.class);
+		emf.addNamedQuery("Emp.findByAfterCreatedAt", query1);
+		
+		//----------------------------------
+		
+		final String jpql2 = """
+SELECT
+  e1
+FROM
+  Emp e1
+WHERE
+  e1.empId = (SELECT
+                  max(e2.empId)
+                FROM
+                  Emp e2
+                )
+				""";
+		
+		TypedQuery<Emp> query2 = em.createQuery(jpql2, Emp.class);
+		emf.addNamedQuery("Emp.findByMaxEmpId", query2);
 		
 	}
 }

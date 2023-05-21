@@ -10,6 +10,7 @@ create table EMP (
   ,BLOOD_TYPE  varchar(2)  not null
   ,NOTE        varchar(1000)
   ,CREATED_AT  TIMESTAMP   not null
+  ,UPDATED_AT  TIMESTAMP   not null
   ,constraint PK_EMP primary key(
      EMP_ID
   )

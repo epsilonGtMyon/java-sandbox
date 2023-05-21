@@ -3,6 +3,7 @@ package epsilongtmyon.db.entity;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
@@ -102,6 +103,26 @@ public class OrderDetail implements Serializable {
 		@Override
 		public String toString() {
 			return "OrderDetailPk [orderId=" + orderId + ", orderDetailNo=" + orderDetailNo + "]";
+		}
+		
+		//----
+		//overrideしてないと警告でる
+
+		@Override
+		public int hashCode() {
+			return Objects.hash(orderDetailNo, orderId);
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			OrderDetailPk other = (OrderDetailPk) obj;
+			return Objects.equals(orderDetailNo, other.orderDetailNo) && Objects.equals(orderId, other.orderId);
 		}
 	}
 }

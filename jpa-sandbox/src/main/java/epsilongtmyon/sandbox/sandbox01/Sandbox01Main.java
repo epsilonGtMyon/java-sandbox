@@ -36,7 +36,7 @@ public class Sandbox01Main {
 	}
 
 	private void execute() {
-//		sandbox01ServiceA.execute();
-		sandbox01ServiceB.execute();
+		sandbox01ServiceA.execute();
+		//		sandbox01ServiceB.execute();
 	}
 }

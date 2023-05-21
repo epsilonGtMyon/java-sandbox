@@ -1,7 +1,5 @@
 package epsilongtmyon.sandbox.sandbox01;
 
-import java.sql.Timestamp;
-
 import epsilongtmyon.db.entity.Emp;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
@@ -65,11 +63,11 @@ public class Sandbox01ServiceA {
 
 		final Emp emp = new Emp();
 		emp.setEmpId(nextEmpId);
-		emp.setFirstName("次郎");
-		emp.setFamilyName("田中");
-		emp.setBloodType("O");
+		emp.setFirstName("三郎");
+		emp.setFamilyName("中村");
+		emp.setBloodType("AB");
 		//emp.setNote("あいやー");
-		emp.setCreatedAt(new Timestamp(System.currentTimeMillis()));
+		// emp.setCreatedAt(new Timestamp(System.currentTimeMillis()));
 
 		// 追加
 		em.persist(emp);
