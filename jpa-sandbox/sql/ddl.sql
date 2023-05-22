@@ -9,8 +9,8 @@ create table EMP (
   ,FAMILY_NAME varchar(10) not null
   ,BLOOD_TYPE  varchar(2)  not null
   ,NOTE        varchar(1000)
-  ,CREATED_AT  TIMESTAMP   not null
-  ,UPDATED_AT  TIMESTAMP   not null
+  ,CREATED_AT  timestamp   not null
+  ,UPDATED_AT  timestamp   not null
   ,constraint PK_EMP primary key(
      EMP_ID
   )
@@ -55,6 +55,45 @@ comment on column ORDER_DETAIL.ORDER_DETAIL_NO is '注文明細番号';
 comment on column ORDER_DETAIL.PRODUCT_NAME    is '商品名';
 comment on column ORDER_DETAIL.PRODUCT_COUNT   is '商品数';
 comment on column ORDER_DETAIL.TOTAL_AMOUNT    is '合計金額';
+
+
+-- DATE_SANDBOX
+create table DATE_SANDBOX (
+   SEQ               bigint identity
+  ,TEXT_DATE01       varchar(8)
+  ,TEXT_DATE02       varchar(8)
+  ,TIMESTAMP_DATE01  timestamp
+  ,TIMESTAMP_DATE02  timestamp
+
+  ,CREATED_AT        timestamp   not null
+  ,UPDATED_AT        timestamp   not null
+  ,constraint PK_DATE_SANDBOX primary key (
+      SEQ
+  )
+);
+
+comment on table  DATE_SANDBOX                 is '日付検証';
+comment on column DATE_SANDBOX.SEQ             is 'SEQ';
+
+
+
+-- CONVERTER_SANDBOX
+create table CONVERTER_SANDBOX (
+   SEQ               bigint identity
+  ,TEXT_ENUM_VALUE01 varchar(8)
+
+  ,CREATED_AT        timestamp   not null
+  ,UPDATED_AT        timestamp   not null
+  ,constraint PK_CONVERTER_SANDBOX primary key (
+      SEQ
+  )
+);
+
+comment on table  CONVERTER_SANDBOX                 is '変換検証';
+comment on column CONVERTER_SANDBOX.SEQ             is 'SEQ';
+
+
+
 
 -- ===========================================
 

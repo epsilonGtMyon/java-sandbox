@@ -7,7 +7,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
 
 @MappedSuperclass
-public abstract class AbstactEntity implements Serializable {
+public abstract class AbstractEntity implements Serializable {
 
 	@Column(name = "CREATED_AT")
 	protected Timestamp createdAt;

@@ -1,6 +1,6 @@
 package epsilongtmyon.db.entity;
 
-import epsilongtmyon.db.entity.common.AbstactEntity;
+import epsilongtmyon.db.entity.common.AbstractEntity;
 import epsilongtmyon.db.entity.common.AbstractEntityListener;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -17,7 +17,7 @@ import jakarta.persistence.Table;
 @EntityListeners(AbstractEntityListener.class)
 @Entity
 @Table(name = "EMP")
-public class Emp extends AbstactEntity {
+public class Emp extends AbstractEntity {
 
 	@Id
 	@Column(name = "EMP_ID")

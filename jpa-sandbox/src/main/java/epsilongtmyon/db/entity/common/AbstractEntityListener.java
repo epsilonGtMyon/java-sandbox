@@ -9,7 +9,7 @@ import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 
 // AbstractのEntityListenerではなく
-//AbstractEntityのListener
+// AbstractEntityのListener
 public class AbstractEntityListener {
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
@@ -18,7 +18,7 @@ public class AbstractEntityListener {
 	public void prePersist(Object entity) {
 		logger.info("pre persist {}", entity);
 
-		if (entity instanceof AbstactEntity ae) {
+		if (entity instanceof AbstractEntity ae) {
 			Timestamp now = new Timestamp(System.currentTimeMillis());
 			ae.setCreatedAt(now);
 			ae.setUpdatedAt(now);
@@ -30,7 +30,7 @@ public class AbstractEntityListener {
 	public void preUpdate(Object entity) {
 		logger.info("pre update {}", entity);
 
-		if (entity instanceof AbstactEntity ae) {
+		if (entity instanceof AbstractEntity ae) {
 			Timestamp now = new Timestamp(System.currentTimeMillis());
 
 			ae.setUpdatedAt(now);
