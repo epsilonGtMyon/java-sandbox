@@ -76,6 +76,24 @@ comment on table  DATE_SANDBOX                 is '日付検証';
 comment on column DATE_SANDBOX.SEQ             is 'SEQ';
 
 
+-- DATE_SANDBOX2
+create table DATE_SANDBOX2 (
+   SEQ               bigint identity
+  ,TIMESTAMP_DATE01  timestamp
+  ,TIMESTAMP_DATE02  timestamp
+  ,TIMESTAMP_DATE03  timestamp
+
+  ,CREATED_AT        timestamp   not null
+  ,UPDATED_AT        timestamp   not null
+  ,constraint PK_DATE_SANDBOX2 primary key (
+      SEQ
+  )
+);
+
+comment on table  DATE_SANDBOX2                 is '日付検証2';
+comment on column DATE_SANDBOX2.SEQ             is 'SEQ';
+
+
 
 -- CONVERTER_SANDBOX
 create table CONVERTER_SANDBOX (
