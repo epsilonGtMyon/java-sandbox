@@ -15,12 +15,22 @@ TomcatでダミーのヘッダーやPrincipalをリクエストに設定するVa
     <Valve className="epsilongtmyon.dummy.DummyHeaderValve"/>
     <Valve className="epsilongtmyon.dummy.DummyPrincipalValve"/>
 ```
+## DummyHeaderValve
 
+`DummyHeaderValve` は `conf/dummyHeaders.properties` でヘッダーを指定できるようにしている(必須ではない)
+
+記入例
+
+```
+aaa=001
+bbb=002
+
+```
 
 
 ## DummyPrincipalValve
 
-`DummyPrincipalValve` は `conf/dummy.properties` でユーザー、ロールを設定できるようにしている(必須ではない)
+`DummyPrincipalValve` は `conf/dummyPrincipal.properties` でユーザー、ロールを設定できるようにしている(必須ではない)
 
 記入例
 

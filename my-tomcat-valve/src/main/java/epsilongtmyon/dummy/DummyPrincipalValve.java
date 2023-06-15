@@ -20,7 +20,7 @@ import org.apache.catalina.realm.GenericPrincipal;
 import org.apache.catalina.valves.ValveBase;
 
 /**
- * DummyのPrincipalをセットするValve
+ * ダミーのPrincipalをセットするValve
  */
 public class DummyPrincipalValve extends ValveBase {
 
@@ -30,18 +30,18 @@ public class DummyPrincipalValve extends ValveBase {
 	@Override
 	protected void initInternal() throws LifecycleException {
 		super.initInternal();
-		loadDummyConfing();
+		loadDummyPrincipalConfig();
 	}
 
-	private void loadDummyConfing() {
-		Path dummyConfPath = new File(container.getCatalinaHome(), "conf/dummy.properties").toPath();
-        containerLog.info("dummyConfPath:" + dummyConfPath.toAbsolutePath().toString());
-		if (Files.notExists(dummyConfPath)) {
-	        containerLog.info("dummyConfPath: not exists");
+	private void loadDummyPrincipalConfig() {
+		Path dummyPrincipalPath = new File(container.getCatalinaHome(), "conf/dummyPrincipal.properties").toPath();
+        containerLog.info("dummyPrincipalPath:" + dummyPrincipalPath.toAbsolutePath().toString());
+		if (Files.notExists(dummyPrincipalPath)) {
+	        containerLog.info("dummyPrincipalPath: not exists");
 			return;
 		}
 
-		try (BufferedReader br = Files.newBufferedReader(dummyConfPath)) {
+		try (BufferedReader br = Files.newBufferedReader(dummyPrincipalPath)) {
 			Properties p = new Properties();
 			p.load(br);
 
