@@ -21,9 +21,10 @@ public class MyEnvironmentDemo1Test {
 	}
 
 	@Test
-	void test2(TestInfo testInfo) throws Exception {
+	void test2(TestInfo testInfo, @MyEnv("TEMP") String env3) throws Exception {
 		System.out.println(testInfo.getDisplayName());
 		System.out.println(env1);
 		System.out.println(env2);
+		System.out.println(env3);
 	}
 }

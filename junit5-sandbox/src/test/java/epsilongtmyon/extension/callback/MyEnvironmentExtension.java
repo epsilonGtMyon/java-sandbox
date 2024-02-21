@@ -7,13 +7,17 @@ import java.util.logging.Logger;
 import org.junit.jupiter.api.extension.BeforeAllCallback;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
+import org.junit.jupiter.api.extension.ParameterContext;
+import org.junit.jupiter.api.extension.ParameterResolutionException;
+import org.junit.jupiter.api.extension.ParameterResolver;
 import org.junit.platform.commons.support.AnnotationSupport;
 import org.junit.platform.commons.support.ModifierSupport;
 
 // BeforeAllCallback, BeforeEachCallbackの実装を作ることでテストの実行前のコールバックを作ることができる。
 // ここでは MyEnvアノテーションがつけられたフィールドに環境変数の値を注入するExtensionを作成した
+// あとついでにParameterResolverも
 
-public class MyEnvironmentExtension implements BeforeAllCallback, BeforeEachCallback {
+public class MyEnvironmentExtension implements BeforeAllCallback, BeforeEachCallback, ParameterResolver {
 
 	private static Logger logger = Logger.getLogger(MyEnvironmentExtension.class.getName());
 
@@ -40,11 +44,11 @@ public class MyEnvironmentExtension implements BeforeAllCallback, BeforeEachCall
 	// フィールドへの注入
 	private void injectFields(Class<?> testClass, Object testInstance,
 			Predicate<Field> predicate) {
-		
+
 		// junitにはAnnotationSupportというアノテーション関連のサポートクラスが存在する。
 		AnnotationSupport.findAnnotatedFields(testClass, MyEnv.class, predicate)
 				.forEach(f -> {
-					MyEnv myEnv = AnnotationSupport.findAnnotation(f, MyEnv.class).orElse(null);
+					MyEnv myEnv = AnnotationSupport.findAnnotation(f, MyEnv.class).get();
 					String value = myEnv.value();
 
 					f.setAccessible(true);
@@ -55,5 +59,22 @@ public class MyEnvironmentExtension implements BeforeAllCallback, BeforeEachCall
 					}
 				});
 
+	}
+
+	// ---------------------------------------------
+	// parameter
+
+	@Override
+	public boolean supportsParameter(ParameterContext parameterContext, ExtensionContext extensionContext)
+			throws ParameterResolutionException {
+		return parameterContext.isAnnotated(MyEnv.class) && parameterContext.getParameter().getType() == String.class;
+	}
+
+	@Override
+	public Object resolveParameter(ParameterContext parameterContext, ExtensionContext extensionContext)
+			throws ParameterResolutionException {
+		MyEnv myEnv = parameterContext.findAnnotation(MyEnv.class).get();
+		String value = myEnv.value();
+		return System.getenv(value);
 	}
 }
