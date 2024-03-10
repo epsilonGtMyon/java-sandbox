@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+
+
+  <variable name="myPattern" value="%d{yyyy/MM/dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} -%kvp- %msg%n" />
+
+  <appender name="STDOUT"
+    class="ch.qos.logback.core.ConsoleAppender">
+    <!-- encoders are assigned by default the type
+         ch.qos.logback.classic.encoder.PatternLayoutEncoder -->
+    <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+      <providers>
+        <timestamp>
+    		<fieldName>timestamp</fieldName>
+			<pattern>yyyy/MM/dd HH:mm:ss.SSS</pattern>    	
+			<timeZone>Asia/Tokyo</timeZone>	
+        </timestamp>
+        <logLevel/>
+        <loggerName>
+    		<fieldName>loggerName</fieldName>
+        </loggerName>
+        <mdc/>
+        <keyValuePairs/>
+        <message/>
+        <arguments/>>
+        <stackTrace/>
+      </providers>
+    </encoder>
+    
+    <!-- 
+    <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+	</encoder>
+	 -->
+  </appender>
+  
+  <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+    <file>log/mylog.log</file>
+    <append>true</append>
+    <immediateFlush>true</immediateFlush>
+    <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+      <providers>
+        <timestamp>
+    		<fieldName>timestamp</fieldName>
+			<pattern>yyyy/MM/dd HH:mm:ss.SSS</pattern>    	
+			<timeZone>Asia/Tokyo</timeZone>	
+        </timestamp>
+        <logLevel/>
+        <loggerName>
+    		<fieldName>loggerName</fieldName>
+        </loggerName>
+        <mdc/>
+        <keyValuePairs/>
+        <message/>
+        <arguments/>>
+        <stackTrace/>
+      </providers>
+    </encoder>
+  </appender>
+
+  <root level="debug">
+    <appender-ref ref="STDOUT" />
+    <appender-ref ref="FILE" />
+  </root>
+</configuration>
