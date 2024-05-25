@@ -21,14 +21,15 @@ dependencies {
 	
 	// implementation 'io.micrometer:micrometer-registry-prometheus:latest.release'
 	
+    implementation platform('io.micrometer:micrometer-bom:1.13.0')
+    
 	// とりあえずコアで試す 
 	// https://mvnrepository.com/artifact/io.micrometer/micrometer-core
-    implementation 'io.micrometer:micrometer-core:1.12.3'
+    implementation 'io.micrometer:micrometer-core'
 	
 	
     // Use JUnit Jupiter for testing.
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.3'
-
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
