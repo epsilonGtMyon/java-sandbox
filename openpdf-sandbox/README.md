@@ -9,7 +9,8 @@ IPAフォントは [ダウンロード](https://moji.or.jp/ipafont/ipafontdownlo
 ```
 src
  ┗ main
- 　┗ resources
-   ┣ ipaexg.ttf
-   ┗ ipaexm.ttf
+   ┗ resources
+      ┗ font
+        ┣ ipaexg.ttf
+        ┗ ipaexm.ttf
 ```
