@@ -32,6 +32,10 @@ public class DataSetProvider {
 		return new DataSetProvider(pathPrefix);
 	}
 
+	public static DataSetProvider getNoPrefix() {
+		return new DataSetProvider("");
+	}
+
 	// -----------------------------------
 
 	public IDataSet loadXls(String resourceName) throws DataSetException, IOException {
