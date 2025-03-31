@@ -1,0 +1,77 @@
+import java.nio.file.Files;
+import java.nio.file.Path;
+
+import org.h2.tools.RunScript;
+import org.h2.tools.Server;
+
+// 設定関連
+final String tcpPort = "9092"
+final String webPort = "8082"
+// シャットダウン用にパスワードが必要なので定義
+final String tcpPassword = "admin"
+// DBファイルの起点となるディレクトリ
+final Path dbFileDirectoryPath = Path.of(project.rootDir.toString(), "h2").toAbsolutePath();
+// DB名
+final String dbName = "testDb"
+
+// -----------------------------------------
+
+// H2 データベースを起動するタスク
+project.tasks.register('h2start', {
+	group = 'h2-for-test'
+	description = 'テスト用のH2を起動する。'
+    doLast {
+        println('Create DB Directory '+ dbFileDirectoryPath.toString())
+		Files.createDirectories(dbFileDirectoryPath);
+		
+        List<String> startCommand = [
+        	"-tcp", "-tcpPort", tcpPort,
+        	"-tcpPassword", tcpPassword,
+        	"-web", "-webPort", webPort,
+        	"-baseDir", dbFileDirectoryPath.toString(),
+        	"-ifNotExists"
+        ]
+        
+        println('Starting H2 Tcp Server ' + startCommand)
+		Server.main(startCommand.stream().toArray(String[]::new));
+    }
+})
+
+// H2 データベースを停止するタスク
+project.tasks.register('h2stop', {
+	group = 'h2-for-test'
+	description = 'テスト用のH2を停止する。'
+    doLast {
+        List<String> stopCommand = [
+        	"-tcpShutdown", "tcp://localhost:" + tcpPort,
+        	"-tcpPassword", tcpPassword
+        ]
+        println('Stopping H2 Tcp Server ' + stopCommand)
+		Server.main(stopCommand.stream().toArray(String[]::new));
+    }
+})
+
+// H2データベースを再作成
+project.tasks.register('h2recreate', {
+	group = 'h2-for-test'
+	description = 'テスト用のH2のDB、テーブルを再作成する。'
+    doLast {
+    	// DBファイルの削除(もっとうまく書けそう)
+    	Path dbFilePath = dbFileDirectoryPath.resolve(dbName + ".mv.db")
+    	Path dbTraceFilePath = dbFileDirectoryPath.resolve(dbName + ".trace.db")
+    	println('delete dbfile='+ dbFilePath)
+    	Files.deleteIfExists(dbFilePath)
+    	Files.deleteIfExists(dbTraceFilePath)
+    	
+    	// スクリプトの実行
+    	// ここも配下のファイルとかチェックしてあれば実行とかにできそう
+    	List<String> command = [
+    		"-url", "jdbc:h2:tcp://localhost:" + tcpPort + "/" + dbName,
+    		"-user", "sa",
+    		"-password", "",
+    		"-script", Path.of(project.rootDir.toString(), "h2-script", "prepare.sql").toAbsolutePath().toString()
+    	]
+        println('Recreating H2 Tcp Server ' + command)
+    	RunScript.main(command.stream().toArray(String[]::new));
+    }
+})

@@ -1,0 +1,16 @@
+plugins {
+  // groovyでプラグインを書くので
+  id 'groovy-gradle-plugin'
+}
+
+repositories {
+    // Use Maven Central for resolving dependencies.
+    mavenCentral()
+}
+
+dependencies {
+	// プラグイン内で利用する依存関係はここで定義する。
+
+    // https://mvnrepository.com/artifact/com.h2database/h2
+    implementation 'com.h2database:h2:2.3.232'
+}
