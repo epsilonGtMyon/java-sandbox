@@ -1,0 +1,14 @@
+
+drop table if exists SANDBOX01;
+
+create table SANDBOX01 (
+   KEY01       varchar(5)
+  ,KEY02       varchar(5)
+  ,STR_VALUE01 varchar(5)
+  ,CREATED_AT  timestamp
+  ,UPDATED_AT  timestamp
+  ,constraint PK_SANDBOX01 primary key (
+    KEY01
+   ,KEY02
+  )
+)
