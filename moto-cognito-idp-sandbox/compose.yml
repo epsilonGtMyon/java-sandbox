@@ -1,0 +1,7 @@
+services:
+  motoserver:
+    image: motoserver/moto:5.1.10
+    ports:
+      - "3000:3000"
+    environment:
+      - MOTO_PORT=3000 # set moto listener port with env var
