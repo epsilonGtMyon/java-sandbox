@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration>
+<configuration>
+
+  <variable name="myPattern" value="%d{yyyy/MM/dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} -%kvp- %msg%n" />
+
+  <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>${myPattern}</pattern>
+    </encoder>
+  </appender>
+
+  <root level="debug">
+    <appender-ref ref="stdout"/>
+  </root>
+
+</configuration>

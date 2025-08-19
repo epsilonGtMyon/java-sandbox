@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="epsilongtmyon.sandbox.sandbox01.xml.MyTableXmlMapper">
+
+  <select id="findByKey" resultType="epsilongtmyon.common.db.entity.MyTable">
+select
+   ID
+  ,STRING_COL
+  ,BIGINT_COL
+  ,INTEGER_COL
+  ,BIGDECIMAL_COL
+  ,DATE_COL
+  ,TIMESTAMP_COL
+  ,CREATED_AT
+  ,UPDATED_AT
+from
+  MY_TABLE
+where
+ ID = #{id}
+  </select>
+  
+  
+  <select id="findAll" resultType="epsilongtmyon.common.db.entity.MyTable">
+select
+   ID
+  ,STRING_COL
+  ,BIGINT_COL
+  ,INTEGER_COL
+  ,BIGDECIMAL_COL
+  ,DATE_COL
+  ,TIMESTAMP_COL
+  ,CREATED_AT
+  ,UPDATED_AT
+from
+  MY_TABLE
+order by
+  ID
+  </select>
+</mapper>
