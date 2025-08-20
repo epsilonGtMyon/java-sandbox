@@ -1,8 +1,10 @@
-package epsilongtmyon.sandbox.sandbox02;
+package epsilongtmyon.sandbox.sandbox03;
 
+import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.math.BigInteger;
-import java.util.List;
 
+import org.apache.ibatis.cursor.Cursor;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -11,18 +13,17 @@ import org.slf4j.LoggerFactory;
 
 import epsilongtmyon.common.db.DbInitializer;
 import epsilongtmyon.common.db.SqlSessionFactoryLoader;
-import epsilongtmyon.common.db.entity.MyLog;
-import epsilongtmyon.common.db.mapper.MyLogMapper;
+import epsilongtmyon.common.db.entity.Series;
+import epsilongtmyon.common.db.mapper.SeriesMapper;
 import epsilongtmyon.sandbox.sandbox02.plugins.CommonFieldInterceptor;
 import epsilongtmyon.sandbox.sandbox02.plugins.LoggingInterceptor1;
 
-public class Sandbox02Main {
-
-	private static final Logger logger = LoggerFactory.getLogger(Sandbox02Main.class);
+public class Sandbox03Main {
+	private static final Logger logger = LoggerFactory.getLogger(Sandbox03Main.class);
 
 	private final SqlSession sqlSession;
 
-	public Sandbox02Main(SqlSession sqlSession) {
+	public Sandbox03Main(SqlSession sqlSession) {
 		super();
 		this.sqlSession = sqlSession;
 	}
@@ -35,7 +36,7 @@ public class Sandbox02Main {
 			dbIni.initializer("init-db.sql");
 			sqlSession.commit();
 
-			Sandbox02Main main = new Sandbox02Main(sqlSession);
+			Sandbox03Main main = new Sandbox03Main(sqlSession);
 			main.start01();
 
 			sqlSession.commit();
@@ -57,31 +58,19 @@ public class Sandbox02Main {
 
 	// インターセプターの確認をするために いくつかのオペレーションを実行
 	private void start01() {
-		logger.info("start01 begin");
+		SeriesMapper seriesMapper = sqlSession.getMapper(SeriesMapper.class);
 
-		MyLogMapper myLogMapper = sqlSession.getMapper(MyLogMapper.class);
+		// 逐次フェッチ
+		try (Cursor<Series> cursor = seriesMapper.select(new BigInteger("100"))) {
 
-		logger.info("insert");
+			for (Series s : cursor) {
 
-		for (int i = 1; i <= 10; i++) {
-			MyLog myLog = new MyLog();
-			myLog.setLogMessage("ログメッセージ" + i);
-			myLogMapper.insert(myLog);
+				logger.info("{}:{}", cursor.getCurrentIndex(), s);
+			}
+
+		} catch (IOException e) {
+			throw new UncheckedIOException(e);
 		}
 
-		MyLog myLog2 = myLogMapper.select(new BigInteger("2"));
-		myLog2.setLogMessage("更新ログ");
-		myLogMapper.update(myLog2);
-
-		myLogMapper.deleteByKey(new BigInteger("3"));
-
-		MyLog myLog4 = myLogMapper.select(new BigInteger("4"));
-		myLogMapper.delete(myLog4);
-
-		List<MyLog> myLogs = myLogMapper.selectAll();
-		myLogs.forEach(System.out::println);
-
-		logger.info("start01 end");
 	}
-
 }
