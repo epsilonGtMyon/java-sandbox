@@ -38,6 +38,11 @@ public class DbInitializer {
 
 			while ((line = br.readLine()) != null) {
 				line = line.stripTrailing();
+				if (line.isEmpty() ||
+						line.stripLeading().startsWith("--")) {
+					continue;
+				}
+
 				sqlBuf.append(line).append(System.lineSeparator());
 
 				if (line.endsWith(";")) {

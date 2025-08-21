@@ -1,5 +1,6 @@
 drop table if exists MY_TABLE;
 drop table if exists MY_LOG;
+drop table if exists MY_EXCEPTION;
 
 create table MY_TABLE (
    ID             bigint auto_increment not null
@@ -17,8 +18,8 @@ create table MY_TABLE (
 );
 
 create table MY_LOG (
-   SEQ             bigint auto_increment not null
-  ,LOG_MESSAGE     varchar(2000)
+   SEQ            bigint auto_increment not null
+  ,LOG_MESSAGE    varchar(2000)
   ,CREATED_AT     timestamp
   ,UPDATED_AT     timestamp
   ,constraint PK_MY_LOG primary key(
@@ -26,7 +27,23 @@ create table MY_LOG (
   )
 );
 
+create table MY_EXCEPTION (
+   EX_KEY         varchar(5)
+  ,AMOUNT         decimal(10, 2)
+  ,CREATED_AT     timestamp
+  ,UPDATED_AT     timestamp
+  ,constraint PK_MY_EXCEPTION primary key(
+	EX_KEY
+  )
+);
+
+-- =============================
+
 insert into MY_TABLE (STRING_COL, BIGINT_COL, INTEGER_COL, BIGDECIMAL_COL, DATE_COL, TIMESTAMP_COL, CREATED_AT, UPDATED_AT)
   values ('あいうえお', 2000000, 5000, 12345.67, '2025-01-02', '2025-01-02 03:04:05', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 insert into MY_TABLE (STRING_COL, BIGINT_COL, INTEGER_COL, BIGDECIMAL_COL, DATE_COL, TIMESTAMP_COL, CREATED_AT, UPDATED_AT)
   values ('かきくけこ', 3000000, 6000, 123456.78, '2026-01-02', '2026-01-02 03:04:05', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+-- 
+insert into MY_EXCEPTION (EX_KEY, AMOUNT, CREATED_AT, UPDATED_AT)
+  values ('EX001', 10.01, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
