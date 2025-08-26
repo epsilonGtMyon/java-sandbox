@@ -21,17 +21,17 @@ public interface MyLogMapper {
 			  ,CREATED_AT
 			  ,UPDATED_AT
 			) values (
-			   #{logMessage}
-			  ,#{createdAt}
-			  ,#{updatedAt}
+			   #{logMessage, jdbcType=VARCHAR}
+			  ,#{createdAt, jdbcType=TIMESTAMP}
+			  ,#{updatedAt, jdbcType=TIMESTAMP}
 			)
 						""")
 	int insert(MyLog myLog);
 
 	@Update("""
 			update MY_LOG set
-			   LOG_MESSAGE = #{logMessage}
-			  ,UPDATED_AT = #{updatedAt}
+			   LOG_MESSAGE = #{logMessage, jdbcType=VARCHAR}
+			  ,UPDATED_AT = #{updatedAt, jdbcType=TIMESTAMP}
 			where
 			  SEQ = #{seq}
 			""")

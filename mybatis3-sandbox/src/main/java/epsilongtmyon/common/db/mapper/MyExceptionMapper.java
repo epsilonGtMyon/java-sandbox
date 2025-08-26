@@ -14,10 +14,10 @@ public interface MyExceptionMapper {
 			  ,CREATED_AT
 			  ,UPDATED_AT
 			) values (
-			   #{exKey}
-			  ,#{amount}
-			  ,#{createdAt}
-			  ,#{updatedAt}
+			   #{exKey, jdbcType=VARCHAR}
+			  ,#{amount, jdbcType=NUMERIC}
+			  ,#{createdAt, jdbcType=TIMESTAMP}
+			  ,#{updatedAt, jdbcType=TIMESTAMP}
 			)
 						""")
 	int insert(MyException myException);

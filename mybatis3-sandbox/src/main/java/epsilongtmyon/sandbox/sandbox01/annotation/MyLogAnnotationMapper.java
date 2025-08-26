@@ -14,9 +14,9 @@ public interface MyLogAnnotationMapper {
 			  ,CREATED_AT
 			  ,UPDATED_AT
 			) values (
-			   #{logMessage}
-			  ,#{createdAt}
-			  ,#{updatedAt}
+			   #{logMessage, jdbcType=VARCHAR}
+			  ,#{createdAt, jdbcType=TIMESTAMP}
+			  ,#{updatedAt, jdbcType=TIMESTAMP}
 			)
 						""")
 	int insert(MyLog myLog);

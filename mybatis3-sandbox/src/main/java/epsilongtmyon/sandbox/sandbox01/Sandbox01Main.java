@@ -35,8 +35,11 @@ public class Sandbox01Main {
 
 			Sandbox01Main main = new Sandbox01Main(sqlSession);
 
-			main.start01();
-			main.start02();
+			main.doXml01();
+			main.doXmlInsertNull();
+			
+			main.doAnnotation01();
+			main.doAnnotationInsertNull();
 
 			sqlSession.commit();
 		}
@@ -54,7 +57,7 @@ public class Sandbox01Main {
 	}
 
 	// 基本操作
-	private void start01() {
+	private void doXml01() {
 
 		MyLogXmlMapper myLogMapper = sqlSession.getMapper(MyLogXmlMapper.class);
 		MyTableXmlMapper myTableMapper = sqlSession.getMapper(MyTableXmlMapper.class);
@@ -75,9 +78,18 @@ public class Sandbox01Main {
 		System.out.println(myLog01);
 
 	}
+	
+	private void doXmlInsertNull() {
+		// nullを入れるときにはsql側に, jdbcType=VARCHAR などを記載する必要がある。
+
+		MyLogXmlMapper myLogMapper = sqlSession.getMapper(MyLogXmlMapper.class);
+		MyLog myLog = new MyLog();
+		myLogMapper.insert(myLog);
+		
+	}
 
 	// アノテーションで操作
-	private void start02() {
+	private void doAnnotation01() {
 
 		MyLogAnnotationMapper myLogMapper = sqlSession.getMapper(MyLogAnnotationMapper.class);
 		MyTableAnnotationMapper myTableMapper = sqlSession.getMapper(MyTableAnnotationMapper.class);
@@ -96,5 +108,15 @@ public class Sandbox01Main {
 		// 自動生成のキーが代入されている。
 		System.out.println(myLog01);
 
+	}
+
+	
+	private void doAnnotationInsertNull() {
+		// nullを入れるときにはsql側に, jdbcType=VARCHAR などを記載する必要がある。
+
+		MyLogAnnotationMapper myLogMapper = sqlSession.getMapper(MyLogAnnotationMapper.class);
+		MyLog myLog = new MyLog();
+		myLogMapper.insert(myLog);
+		
 	}
 }
