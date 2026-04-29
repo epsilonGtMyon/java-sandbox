@@ -25,7 +25,7 @@ public class DbInitializer {
 		this.sqlSession = sqlSession;
 	}
 
-	public void initializer(String sqlResource) {
+	public void initialize(String sqlResource) {
 
 		Connection con = sqlSession.getConnection();
 

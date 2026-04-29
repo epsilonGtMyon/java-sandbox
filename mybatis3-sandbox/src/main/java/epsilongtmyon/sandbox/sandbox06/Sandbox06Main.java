@@ -37,9 +37,9 @@ public class Sandbox06Main {
 	public static void main(String[] args) {
 
 		SqlSessionFactory sqlSessionFactory = newSqlSessionFactory();
-		try (SqlSession sqlSession = sqlSessionFactory.openSession(false)) {
+		try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
 			epsilongtmyon.common.db.DbInitializer dbIni = new DbInitializer(sqlSession);
-			dbIni.initializer("init-db.sql");
+			dbIni.initialize("init-db.sql");
 			sqlSession.commit();
 
 			MyLogMapper myLogMapper = sqlSession.getMapper(MyLogMapper.class);
