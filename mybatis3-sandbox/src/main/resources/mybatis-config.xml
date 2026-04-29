@@ -6,6 +6,9 @@
   <settings>
    <!-- 列の自動マッピング -->
    <setting name="mapUnderscoreToCamelCase" value="true"/>
+   <!-- 結果の列がすべてnullでもインスタンスを生成するか (default:false)  -->
+   <setting name="returnInstanceForEmptyRow" value="true"/>
+   <!-- ロガー -->
    <setting name="logImpl" value="SLF4J"/>
   </settings>
   <environments default="development">
